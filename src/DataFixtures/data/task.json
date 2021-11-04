@@ -2,22 +2,22 @@
     {
         "name" : "Do the dishes",
         "isActivated" : true,
-        "repeat" : 2,
-        "start" : "2022-10-01",
+        "repeatInterval" : 2,
+        "start" : "2025-01-08T11:00:01+141",
         "message" : "Wake up and do the dishes c'mon!"
     },
     {
         "name" : "Appointement to town hall",
         "isActivated" : true,
-        "repeat" : 0,
-        "start" : "2022-02-01",
+        "repeatInterval" : 0,
+        "start" : "2022-05-11T11:00:01+141",
         "message" : "Bring ID card"
     },
     {
         "name" : "Car review",
         "isActivated" : false,
-        "repeat" : 0,
-        "start" : "2022-05-01",
+        "repeatInterval" : 0,
+        "start" : "2022-11-10T11:00:01+141",
         "message" : "Annual review"
     }
 ]

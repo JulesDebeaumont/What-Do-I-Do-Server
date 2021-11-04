@@ -30,10 +30,10 @@ class Task
     /**
      * @ORM\Column(type="integer")
      */
-    private $repeat;
+    private $repeatInterval;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $start;
 
@@ -77,14 +77,14 @@ class Task
         return $this;
     }
 
-    public function getRepeat(): ?int
+    public function getRepeatInterval(): ?int
     {
-        return $this->repeat;
+        return $this->repeatInterval;
     }
 
-    public function setRepeat(int $repeat): self
+    public function setRepeatInterval(int $repeatInterval): self
     {
-        $this->repeat = $repeat;
+        $this->repeatInterval = $repeatInterval;
 
         return $this;
     }

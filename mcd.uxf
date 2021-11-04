@@ -1,24 +1,24 @@
-<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>360</x><y>70</y><w>130</w><h>120</h></coordinates><panel_attributes>User
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>360</x><y>20</y><w>130</w><h>120</h></coordinates><panel_attributes>User
 --
 email: string
 password: string
-fg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>310</y><w>130</w><h>120</h></coordinates><panel_attributes>Task
+fg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>260</y><w>130</w><h>120</h></coordinates><panel_attributes>Task
 --
 name: string
 isActivated: boolean
-repeat: integer
+repeatInterval: integer
 start: Date
 message: text
 fg=green
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>190</x><y>300</y><w>100</w><h>120</h></coordinates><panel_attributes>Activity
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>190</x><y>250</y><w>100</w><h>120</h></coordinates><panel_attributes>Activity
 --
 name: string
 duration: integer
-fg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>240</x><y>150</y><w>140</w><h>170</h></coordinates><panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;
+fg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>240</x><y>100</y><w>140</w><h>170</h></coordinates><panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;
 has
 m1= 0,n
 m2= 1
-fg=green</panel_attributes><additional_attributes>10;150;10;10;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>480</x><y>130</y><w>150</w><h>200</h></coordinates><panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;
+fg=green</panel_attributes><additional_attributes>10;150;10;10;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>480</x><y>80</y><w>150</w><h>200</h></coordinates><panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;
 has
 m1= 0,n
 m2= 1

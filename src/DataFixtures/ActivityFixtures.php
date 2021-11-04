@@ -19,13 +19,13 @@ class ActivityFixtures extends Fixture implements DependentFixtureInterface
 
         foreach ($activities as $activity)
         {
-            $activity = new Activity();
-            $activity->setName($activity['name']);
-            $activity->setDuration($activity['duration']);
+            $newActivity = new Activity();
+            $newActivity->setName($activity['name']);
+            $newActivity->setDuration($activity['duration']);
 
-            $activity->setOwner($this->setReference(UserFixtures::USER));
+            $newActivity->setOwner($this->getReference(UserFixtures::USER));
 
-            $manager->persist($activity);
+            $manager->persist($newActivity);
         }
         $manager->flush();
     }

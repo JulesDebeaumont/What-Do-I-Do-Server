@@ -25,9 +25,9 @@ class UserFixtures extends Fixture
         $password = $this->encoder->encodePassword($user, 'changeMe');
         $user->setPassword($password);
 
+        $manager->persist($user);
         $this->addReference(self::USER, $user);
 
-        $manager->persist($user);
 
         $manager->flush();
     }

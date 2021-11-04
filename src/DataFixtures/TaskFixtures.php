@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\Task;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -22,10 +24,10 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
             $newTask = new Task();
             $newTask->setName($task['name']);
             $newTask->setIsActivated($task['isActivated']);
-            $newTask->setStart(new Date($task['start']));
+            $newTask->setRepeatInterval($task['repeatInterval']);
+            $newTask->setStart(DateTime::createFromFormat(DateTimeInterface::ATOM, $task['start']));
             $newTask->setMessage($task['message']);
-
-            $newTask->setOwner($this->setReference(UserFixtures::USER));
+            $newTask->setOwner($this->getReference(UserFixtures::USER));
 
             $manager->persist($newTask);
         }
