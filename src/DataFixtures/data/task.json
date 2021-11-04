@@ -1,0 +1,23 @@
+[
+    {
+        "name" : "Do the dishes",
+        "isActivated" : true,
+        "repeat" : 2,
+        "start" : "2022-10-01",
+        "message" : "Wake up and do the dishes c'mon!"
+    },
+    {
+        "name" : "Appointement to town hall",
+        "isActivated" : true,
+        "repeat" : 0,
+        "start" : "2022-02-01",
+        "message" : "Bring ID card"
+    },
+    {
+        "name" : "Car review",
+        "isActivated" : false,
+        "repeat" : 0,
+        "start" : "2022-05-01",
+        "message" : "Annual review"
+    }
+]
