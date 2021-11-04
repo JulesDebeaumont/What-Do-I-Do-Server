@@ -27,6 +27,13 @@ class Activity
      */
     private $duration;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="activities")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $owner;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -55,4 +62,17 @@ class Activity
 
         return $this;
     }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
 }
