@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Activites;
+use App\Entity\Activity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Activites|null find($id, $lockMode = null, $lockVersion = null)
- * @method Activites|null findOneBy(array $criteria, array $orderBy = null)
- * @method Activites[]    findAll()
- * @method Activites[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Activity|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Activity|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Activity[]    findAll()
+ * @method Activity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ActivitesRepository extends ServiceEntityRepository
+class ActivityRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Activites::class);
+        parent::__construct($registry, Activity::class);
     }
 
     // /**
-    //  * @return Activites[] Returns an array of Activites objects
+    //  * @return Activity[] Returns an array of Activity objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class ActivitesRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Activites
+    public function findOneBySomeField($value): ?Activity
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.exampleField = :val')

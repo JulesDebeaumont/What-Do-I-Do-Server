@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ActivitesRepository;
+use App\Repository\ActivityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ActivitesRepository::class)
+ * @ORM\Entity(repositoryClass=ActivityRepository::class)
  */
-class Activites
+class Activity
 {
     /**
      * @ORM\Id

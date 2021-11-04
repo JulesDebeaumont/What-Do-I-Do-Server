@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Tasks;
+use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Tasks|null find($id, $lockMode = null, $lockVersion = null)
- * @method Tasks|null findOneBy(array $criteria, array $orderBy = null)
- * @method Tasks[]    findAll()
- * @method Tasks[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Task|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Task|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Task[]    findAll()
+ * @method Task[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TasksRepository extends ServiceEntityRepository
+class TaskRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Tasks::class);
+        parent::__construct($registry, Task::class);
     }
 
     // /**
-    //  * @return Tasks[] Returns an array of Tasks objects
+    //  * @return Task[] Returns an array of Task objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class TasksRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Tasks
+    public function findOneBySomeField($value): ?Task
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.exampleField = :val')

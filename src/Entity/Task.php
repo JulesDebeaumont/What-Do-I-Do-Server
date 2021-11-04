@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TasksRepository;
+use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=TasksRepository::class)
+ * @ORM\Entity(repositoryClass=TaskRepository::class)
  */
-class Tasks
+class Task
 {
     /**
      * @ORM\Id
