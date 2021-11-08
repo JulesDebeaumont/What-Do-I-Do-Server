@@ -13,8 +13,8 @@ use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @ApiResource()
  */
-#[ApiResource]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
