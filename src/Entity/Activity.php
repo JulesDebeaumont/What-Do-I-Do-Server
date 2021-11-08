@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use App\Repository\ActivityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=ActivityRepository::class)
  */
+#[ApiResource]
 class Activity
 {
     /**
