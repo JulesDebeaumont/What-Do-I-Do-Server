@@ -9,7 +9,37 @@ use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ORM\Entity(repositoryClass=ActivityRepository::class)
  */
-#[ApiResource]
+#[ApiResource(
+    iri: "http://schema.org/Activity",
+    attributes: [
+        "security" => "is_granted('ROLE_USER')",
+        "security_message" => "You need to be logged in to do that!"
+    ],
+    collectionOperations: [
+        'get' => [
+            "security" => "is_granted('ROLE_USER') and object.owner == user",
+            "security_message" => "You don't own this!"
+        ],
+        'post' => [
+            "security" => "is_granted('ROLE_USER')",
+            "security_message" => "You need to be logged in to do that!"
+        ]
+    ],
+    itemOperations: [
+        'get' => [
+            "security" => "is_granted('ROLE_USER') and object.owner == user",
+            "security_message" => "You don't own this!"
+        ],
+        'put' => [
+            "security" => "is_granted('ROLE_USER') and object.owner == user",
+            "security_message" => "You don't own this!"
+        ],
+        'delete' => [
+            "security" => "is_granted('ROLE_USER') and object.owner == user",
+            "security_message" => "You don't own this!"
+        ]
+    ]
+)]
 class Activity
 {
     /**
