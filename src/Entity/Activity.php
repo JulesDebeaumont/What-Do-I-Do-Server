@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ActivityRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=ActivityRepository::class)
@@ -16,10 +18,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
         "security_message" => "You need to be logged in to do that!"
     ],
     collectionOperations: [
-        'get' => [
-            "security" => "is_granted('ROLE_USER') and object.owner == user",
-            "security_message" => "You don't own this!"
-        ],
         'post' => [
             "security" => "is_granted('ROLE_USER')",
             "security_message" => "You need to be logged in to do that!"
@@ -40,6 +38,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
         ]
     ]
 )]
+#[ApiFilter(SearchFilter::class, properties: ['name' => 'partial'])]
 class Activity
 {
     /**

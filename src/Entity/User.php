@@ -8,11 +8,24 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  */
+#[ApiResource(
+    iri: "http://schema.org/User",
+    collectionOperations: [
+        'post'
+    ],
+    itemOperations: [
+        'get' => [
+            "security" => "is_granted('ROLE_USER') and object == user",
+            "security_message" => "You can't do that!"
+        ]
+    ]
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
