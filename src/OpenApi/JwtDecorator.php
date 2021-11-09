@@ -33,11 +33,11 @@ final class JwtDecorator implements OpenApiFactoryInterface
             'properties' => [
                 'email' => [
                     'type' => 'string',
-                    'example' => 'johndoe@example.com',
+                    'example' => 'random@yahoo.fr',
                 ],
                 'password' => [
                     'type' => 'string',
-                    'example' => 'apassword',
+                    'example' => 'changeMe',
                 ],
             ],
         ]);
@@ -72,7 +72,7 @@ final class JwtDecorator implements OpenApiFactoryInterface
                 ),
             ),
         );
-        $openApi->getPaths()->addPath('/authentication_token', $pathItem);
+        $openApi->getPaths()->addPath('/api/login', $pathItem);
 
         return $openApi;
     }
