@@ -80,6 +80,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(
+     *      min = 8,
+     *      minMessage = "Passwors must be at least {{ limit }} characters long"
+     * )
      */
     #[Groups("user_create")]
     private $password;
