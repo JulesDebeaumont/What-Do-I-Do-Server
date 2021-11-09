@@ -6,39 +6,33 @@ use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
 
 class UserDataPersister implements DataPersisterInterface
 {
     private $entityManager;
     private $userPasswordEncoder;
-    private $decorated;
 
-    public function __construct(
-        EntityManagerInterface $entityManager, 
-        UserPasswordEncoderInterface $userPasswordEncoder,
-        ContextAwareDataPersisterInterface $decorated
-        )
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordEncoderInterface $userPasswordEncoder)
     {
         $this->entityManager = $entityManager;
         $this->userPasswordEncoder = $userPasswordEncoder;
-        $this->decorated = $decorated;
     }
 
-    public function supports($data, array $context = []): bool
+    public function supports($data): bool
     {
-        return $this->decorated->supports($data, $context);
+        return $data instanceof User;
     }
 
-    public function persist($data, array $context = [])
+    public function persist($data)
     {
-        $result = $this->decorated->persist($data, $context);
-
-        if ($data instanceof User && $data->getPassword()) {
-            $data->setPassword($this->userPasswordEncoder->encodePassword($data, $data->getPassword()));
+        if ($data->getPassword()) {
+            $data->setPassword(
+                $this->userPasswordEncoder->encodePassword($data, $data->getPassword())
+            );
+            $data->eraseCredentials();
         }
-        
-        return $result;
+        $this->entityManager->persist($data);
+        $this->entityManager->flush();
     }
 
     public function remove($data)
