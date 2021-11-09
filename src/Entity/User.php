@@ -19,32 +19,36 @@ use Symfony\Component\Serializer\Annotation\Groups;
     iri: "http://schema.org/User",
     collectionOperations: [
         'post' => [ 
-            'denormalizationContext' => ['groups' => ['user_create']],
-            'normalizationContext' => ['groups' => ['user_read']]
+            'denormalization_context' => ['groups' => ['user_create']],
+            'normalization_context' => ['groups' => ['user_read']]
         ]
     ],
     itemOperations: [
         'get' => [
-            'normalizationContext' => ['groups' => ['user_read']],
+            'normalization_context' => ['groups' => ['user_read']],
             "security" => "is_granted('ROLE_USER') and object == user",
             "security_message" => "You can't do that!"
         ],
         'tasks' => [
             'method' => 'GET',
-            'path' => '/users/{userId}/tasks',
-            'requirements' => ['userId' => '\d+'],
+            'path' => '/users/{id}/tasks',
+            'requirements' => ['id' => '\d+'],
             'defaults' => ['color' => 'brown'],
-            'normalizationContext' => ['groups' => ['user_tasks']]
+            'normalization_context' => ['groups' => ['user_tasks']],
+            "security" => "is_granted('ROLE_USER') and object == user",
+            "security_message" => "You can't do that!"
         ],
         'activites' => [
             'method' => 'GET',
-            'path' => '/users/{userId}/activities',
-            'requirements' => ['userId' => '\d+'],
+            'path' => '/users/{id}/activities',
+            'requirements' => ['id' => '\d+'],
             'defaults' => ['color' => 'brown'],
-            'normalizationContext' => ['groups' => ['user_activities']]
+            'normalization_context' => ['groups' => ['user_activities']],
+            "security" => "is_granted('ROLE_USER') and object == user",
+            "security_message" => "You can't do that!"
         ],
         'delete' => [
-            'normalizationContext' => ['groups' => ['user_read']],
+            'normalization_context' => ['groups' => ['user_read']],
             "security" => "is_granted('ROLE_USER') and object == user",
             "security_message" => "You can't do that!"
         ]

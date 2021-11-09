@@ -41,7 +41,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
         ]
     ]
 )]
-#[ApiFilter(SearchFilter::class, properties: ['name' => 'partial'])]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: ['name' => 'partial']
+)]
 class Task
 {
     /**
