@@ -7,12 +7,15 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ActivityRepository::class)
  */
 #[ApiResource(
     iri: "http://schema.org/Activity",
+    normalizationContext: ['groups' => ['activity_read']],
+    denormalizationContext: ['groups' => ['activity_write']],
     attributes: [
         "security" => "is_granted('ROLE_USER')",
         "security_message" => "You need to be logged in to do that!"
@@ -28,7 +31,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             "security" => "is_granted('ROLE_USER') and object.owner == user",
             "security_message" => "You don't own this!"
         ],
-        'put' => [
+        'patch' => [
             "security" => "is_granted('ROLE_USER') and object.owner == user",
             "security_message" => "You don't own this!"
         ],
@@ -46,22 +49,26 @@ class Activity
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(["activity_read", "user_activities"])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(["activity_read", "activity_write", "user_activities"])]
     private $name;
 
     /**
      * @ORM\Column(type="integer")
      */
+    #[Groups(["activity_read", "activity_write", "user_activities"])]
     private $duration;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="activities")
      * @ORM\JoinColumn(nullable=false)
      */
+    #[Groups("activity_read")]
     private $owner;
 
 

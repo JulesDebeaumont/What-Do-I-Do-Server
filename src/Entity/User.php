@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -17,10 +18,33 @@ use ApiPlatform\Core\Annotation\ApiResource;
 #[ApiResource(
     iri: "http://schema.org/User",
     collectionOperations: [
-        'post'
+        'post' => [ 
+            'denormalizationContext' => ['groups' => ['user_create']],
+            'normalizationContext' => ['groups' => ['user_read']]
+        ]
     ],
     itemOperations: [
         'get' => [
+            'normalizationContext' => ['groups' => ['user_read']],
+            "security" => "is_granted('ROLE_USER') and object == user",
+            "security_message" => "You can't do that!"
+        ],
+        'tasks' => [
+            'method' => 'GET',
+            'path' => '/users/{userId}/tasks',
+            'requirements' => ['userId' => '\d+'],
+            'defaults' => ['color' => 'brown'],
+            'normalizationContext' => ['groups' => ['user_tasks']]
+        ],
+        'activites' => [
+            'method' => 'GET',
+            'path' => '/users/{userId}/activities',
+            'requirements' => ['userId' => '\d+'],
+            'defaults' => ['color' => 'brown'],
+            'normalizationContext' => ['groups' => ['user_activities']]
+        ],
+        'delete' => [
+            'normalizationContext' => ['groups' => ['user_read']],
             "security" => "is_granted('ROLE_USER') and object == user",
             "security_message" => "You can't do that!"
         ]
@@ -33,11 +57,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(["user_read", "activity_read", "task_read", "user_tasks", "user_activities"])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
+    #[Groups(["user_read", "user_create"])]
     private $email;
 
     /**
@@ -49,16 +75,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
+    #[Groups("user_create")]
     private $password;
 
     /**
      * @ORM\OneToMany(targetEntity=Activity::class, mappedBy="owner", orphanRemoval=true)
      */
+    #[Groups("user_activities")]
     private $activities;
 
     /**
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="owner", orphanRemoval=true)
      */
+    #[Groups("user_tasks")]
     private $tasks;
 
     public function __construct()

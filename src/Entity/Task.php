@@ -7,12 +7,15 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TaskRepository::class)
  */
 #[ApiResource(
     iri: "http://schema.org/Task",
+    normalizationContext: ['groups' => ['task_read']],
+    denormalizationContext: ['groups' => ['task_write']],
     attributes: [
         "security" => "is_granted('ROLE_USER')",
         "security_message" => "You need to be logged in to do that!"
@@ -28,7 +31,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             "security" => "is_granted('ROLE_USER') and object.owner == user",
             "security_message" => "You don't own this!"
         ],
-        'put' => [
+        'patch' => [
             "security" => "is_granted('ROLE_USER') and object.owner == user",
             "security_message" => "You don't own this!"
         ],
@@ -46,37 +49,44 @@ class Task
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(["task_read", "user_tasks"])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(["task_read", "task_write", "user_tasks"])]
     private $name;
 
     /**
      * @ORM\Column(type="boolean")
      */
+    #[Groups(["task_read", "task_write", "user_tasks"])]
     private $isActivated;
 
     /**
      * @ORM\Column(type="integer")
      */
+    #[Groups(["task_read", "task_write", "user_tasks"])]
     private $repeatInterval;
 
     /**
      * @ORM\Column(type="datetime")
      */
+    #[Groups(["task_read", "task_write", "user_tasks"])]
     private $start;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
+    #[Groups(["task_read", "task_write", "user_tasks"])]
     private $message;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tasks")
      * @ORM\JoinColumn(nullable=false)
      */
+    #[Groups("task_read")]
     private $owner;
 
     public function getId(): ?int

@@ -21,13 +21,16 @@ class UserFixtures extends Fixture
     {
         $user = new User();
         $user->setEmail('random@yahoo.fr');
-
         $password = $this->encoder->encodePassword($user, 'changeMe');
         $user->setPassword($password);
-
         $manager->persist($user);
         $this->addReference(self::USER, $user);
 
+        $user2 = new User();
+        $user2->setEmail('random2@yahoo.fr');
+        $password = $this->encoder->encodePassword($user2, 'changeMe');
+        $user2->setPassword($password);
+        $manager->persist($user2);
 
         $manager->flush();
     }
