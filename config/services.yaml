@@ -28,3 +28,8 @@ services:
     App\OpenApi\JwtDecorator:
         decorates: 'api_platform.openapi.factory'
         arguments: ['@.inner'] 
+
+    'App\Serialization\Denormalizer\UserDenormalizer':
+        tags:
+            - { name: 'serialization.denormalizer', priority: 64 }
+            
