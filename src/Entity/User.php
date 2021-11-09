@@ -19,7 +19,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     iri: "http://schema.org/User",
     collectionOperations: [
-        'post' => [ 
+        'register' => [
+            'method' => 'POST',
+            'path' => '/register',
+            'defaults' => ['color' => 'pink'],
             'denormalization_context' => ['groups' => ['user_create']],
             'normalization_context' => ['groups' => ['user_read']]
         ]

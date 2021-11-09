@@ -10,37 +10,22 @@ class AuthenticationTest extends ApiTestCase
 
     public function testLogin(): void
     {
-        $client = self::createClient();
+        $client = self::createClient(['test@hotmail.fr', 'changeMe']);
 
-        $user = new User();
-        $user->setEmail('random@yahoo.fr');
-        $user->setPassword(
-            self::getContainer()->get('security.user_password_hasher')->hashPassword($user, 'changeMe')
-        );
-
-        $manager = self::getContainer()->get('doctrine')->getManager();
-        $manager->persist($user);
-        $manager->flush();
-
-        // retrieve a token
         $response = $client->request('POST', '/authentication_token', [
-            'headers' => ['Content-Type' => 'application/json'],
-            'json' => [
-                'email' => 'random@yahoo.fr',
-                'password' => 'changeMe',
-            ],
+            'auth_basic' => ['test@hotmail.fr', 'changeMe'],
         ]);
 
-        $json = $response->toArray();
+        // Verifie que l'api renvoie bien un token
         $this->assertResponseIsSuccessful();
-        $this->assertArrayHasKey('token', $json);
+        $this->assertArrayHasKey('token', $response);
 
-        // test not authorized
-        $client->request('GET', '/api/activities/1');
+        // Test 
+        $client->request('GET', '/api/users/3');
         $this->assertResponseStatusCodeSame(401);
 
         // test authorized
-        $client->request('GET', '/api/activities/1', ['auth_bearer' => $json['token']]);
+        $client->request('GET', '/api/users/3', ['auth_bearer' => $response['token']]);
         $this->assertResponseIsSuccessful();
     }
 }
