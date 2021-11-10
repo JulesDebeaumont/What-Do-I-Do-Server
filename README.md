@@ -1,7 +1,7 @@
 # What Do I Do - Serveur side
 
 By *Jules Debeaumont*
-
+JWT Setup thanks to this: https://youtu.be/XPXrNI-fux4
 
 ### 1_Installation
 

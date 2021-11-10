@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -40,7 +41,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             'requirements' => ['id' => '\d+'],
             'defaults' => ['color' => 'brown'],
             'normalization_context' => ['groups' => ['user_tasks']],
-            "security" => "is_granted('ROLE_USER') and object == user",
+            "security" => "is_granted('ROLE_USER') and object.getId() == user.getId()",
             "security_message" => "You can't do that!",
             "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ],
@@ -50,19 +51,19 @@ use Symfony\Component\Validator\Constraints as Assert;
             'requirements' => ['id' => '\d+'],
             'defaults' => ['color' => 'brown'],
             'normalization_context' => ['groups' => ['user_activities']],
-            "security" => "is_granted('ROLE_USER') and object == user",
+            "security" => "is_granted('ROLE_USER') and object.getId() == user.getId()",
             "security_message" => "You can't do that!",
             "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ],
         'delete' => [
             'normalization_context' => ['groups' => ['user_read']],
-            "security" => "is_granted('ROLE_USER') and object == user",
+            "security" => "is_granted('ROLE_USER') and object.getId() == user.getId()",
             "security_message" => "You can't do that!",
             "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ]
     ]
 )]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUserInterface
 {
     /**
      * @ORM\Id
@@ -116,6 +117,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(?int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -201,7 +209,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-    
+
 
     /**
      * @return Collection|Activity[]
@@ -261,5 +269,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public static function createFromPayload($email, array $payload)
+    {
+        $user = new User();
+        $user->setEmail($email);
+        $user->setId($payload['id']);
+
+        return $user;
     }
 }
