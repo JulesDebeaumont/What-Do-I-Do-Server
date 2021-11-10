@@ -23,6 +23,10 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        refresh:
+            pattern:  ^/api/token/refresh
+            stateless: true
+
         login:
             pattern: ^/api/login
             stateless: true
