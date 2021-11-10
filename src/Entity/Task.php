@@ -30,17 +30,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
     itemOperations: [
         'get' => [
-            "security" => "is_granted('ROLE_USER') and object.owner == user",
+            "security" => "is_granted('ROLE_USER') and object.getOwner() == user",
             "security_message" => "You don't own this!",
             "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ],
         'patch' => [
-            "security" => "is_granted('ROLE_USER') and object.owner == user",
+            "security" => "is_granted('ROLE_USER') and object.getOwner() == user",
             "security_message" => "You don't own this!",
             "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ],
         'delete' => [
-            "security" => "is_granted('ROLE_USER') and object.owner == user",
+            "security" => "is_granted('ROLE_USER') and object.getOwner() == user",
             "security_message" => "You don't own this!",
             "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ]
