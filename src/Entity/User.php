@@ -31,7 +31,8 @@ use Symfony\Component\Validator\Constraints as Assert;
         'get' => [
             'normalization_context' => ['groups' => ['user_read']],
             "security" => "is_granted('ROLE_USER') and object == user",
-            "security_message" => "You can't do that!"
+            "security_message" => "You can't do that!",
+            "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ],
         'tasks' => [
             'method' => 'GET',
@@ -40,7 +41,8 @@ use Symfony\Component\Validator\Constraints as Assert;
             'defaults' => ['color' => 'brown'],
             'normalization_context' => ['groups' => ['user_tasks']],
             "security" => "is_granted('ROLE_USER') and object == user",
-            "security_message" => "You can't do that!"
+            "security_message" => "You can't do that!",
+            "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ],
         'activites' => [
             'method' => 'GET',
@@ -49,12 +51,14 @@ use Symfony\Component\Validator\Constraints as Assert;
             'defaults' => ['color' => 'brown'],
             'normalization_context' => ['groups' => ['user_activities']],
             "security" => "is_granted('ROLE_USER') and object == user",
-            "security_message" => "You can't do that!"
+            "security_message" => "You can't do that!",
+            "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ],
         'delete' => [
             'normalization_context' => ['groups' => ['user_read']],
             "security" => "is_granted('ROLE_USER') and object == user",
-            "security_message" => "You can't do that!"
+            "security_message" => "You can't do that!",
+            "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ]
     ]
 )]

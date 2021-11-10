@@ -18,26 +18,31 @@ use Symfony\Component\Serializer\Annotation\Groups;
     denormalizationContext: ['groups' => ['activity_write']],
     attributes: [
         "security" => "is_granted('ROLE_USER')",
-        "security_message" => "You need to be logged in to do that!"
+        "security_message" => "You need to be logged in to do that!",
+        "openapi_context" => ['security' => [['bearerAuth' => []]]]
     ],
     collectionOperations: [
         'post' => [
             "security" => "is_granted('ROLE_USER')",
-            "security_message" => "You need to be logged in to do that!"
+            "security_message" => "You need to be logged in to do that!",
+            "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ]
     ],
     itemOperations: [
         'get' => [
             "security" => "is_granted('ROLE_USER') and object.owner == user",
-            "security_message" => "You don't own this!"
+            "security_message" => "You don't own this!",
+            "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ],
         'patch' => [
             "security" => "is_granted('ROLE_USER') and object.owner == user",
-            "security_message" => "You don't own this!"
+            "security_message" => "You don't own this!",
+            "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ],
         'delete' => [
             "security" => "is_granted('ROLE_USER') and object.owner == user",
-            "security_message" => "You don't own this!"
+            "security_message" => "You don't own this!",
+            "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ]
     ]
 )]
