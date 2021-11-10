@@ -74,6 +74,55 @@ final class JwtDecorator implements OpenApiFactoryInterface
         );
         $openApi->getPaths()->addPath('/api/login', $pathItem);
 
+        $schemas['TokenRefresh'] = new \ArrayObject([
+            'type' => 'object',
+            'properties' => [
+                'token' => [
+                    'type' => 'string',
+                    'readOnly' => true,
+                ],
+            ],
+        ]);
+        $schemas['CredentialsRefresh'] = new \ArrayObject([
+            'type' => 'object',
+            'properties' => [
+                'refresh_token' => [
+                    'type' => 'string'
+                ]
+            ],
+        ]);
+        $pathItemRefresh = new Model\PathItem(
+            ref: 'JWT Token Refresh',
+            post: new Model\Operation(
+                operationId: 'postCredentialsRefreshItem',
+                tags: ['Token'],
+                responses: [
+                    '200' => [
+                        'description' => 'Refresh JWT token',
+                        'content' => [
+                            'application/json' => [
+                                'schema' => [
+                                    '$ref' => '#/components/schemas/TokenRefresh',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                summary: 'Refresh JWT',
+                requestBody: new Model\RequestBody(
+                    description: 'Refresh JWT',
+                    content: new \ArrayObject([
+                        'application/json' => [
+                            'schema' => [
+                                '$ref' => '#/components/schemas/CredentialsRefresh',
+                            ],
+                        ],
+                    ]),
+                ),
+            ),
+        );
+        $openApi->getPaths()->addPath('/api/token/refresh', $pathItemRefresh);
+
         return $openApi;
     }
 }
