@@ -34,7 +34,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
             $manager->persist($newTask);
         }
 
-        // Setting a specific 
+        // Setting a specific user to check that each user has its own tasks 
         // TODO This should go into a test..
         $anotherTask = new Task();
         $anotherTask->setName('Buy milk');
