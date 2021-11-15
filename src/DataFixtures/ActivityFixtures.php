@@ -23,7 +23,7 @@ class ActivityFixtures extends Fixture implements DependentFixtureInterface
             $newActivity->setName($activity['name']);
             $newActivity->setDuration($activity['duration']);
 
-            $newActivity->setOwner($this->getReference(UserFixtures::USER));
+            $newActivity->setOwner($this->getReference(UserFixtures::USER1));
 
             $manager->persist($newActivity);
         }
