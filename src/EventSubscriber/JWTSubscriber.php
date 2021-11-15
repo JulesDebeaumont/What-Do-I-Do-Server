@@ -21,6 +21,7 @@ class JWTSubscriber implements EventSubscriberInterface
         $event->setData($data);
     }
 
+    // UNUSED
     public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $event)
     {
         $data = $event->getData();
@@ -41,7 +42,7 @@ class JWTSubscriber implements EventSubscriberInterface
     {
         return [
             'lexik_jwt_authentication.on_jwt_created' => 'onLexikJwtAuthenticationOnJwtCreated',
-            'lexik_jwt_authentication.on_authentication_success' => 'onAuthenticationSuccessResponse'
+            // 'lexik_jwt_authentication.on_authentication_success' => 'onAuthenticationSuccessResponse'
         ];
     }
 }
