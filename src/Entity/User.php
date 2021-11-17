@@ -31,7 +31,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     itemOperations: [
         'get' => [
             'normalization_context' => ['groups' => ['user_read']],
-            "security" => "is_granted('ROLE_USER') and object == user",
+            "security" => "is_granted('ROLE_USER') and object.getId() == user.getId()",
             "security_message" => "You can't do that!",
             "openapi_context" => ['security' => [['bearerAuth' => []]]]
         ],

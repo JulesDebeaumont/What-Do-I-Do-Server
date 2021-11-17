@@ -15,7 +15,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     iri: "http://schema.org/Activity",
     normalizationContext: ['groups' => ['activity_read']],
-    denormalizationContext: ['groups' => ['activity_write']],
     attributes: [
         "security" => "is_granted('ROLE_USER')",
         "security_message" => "You need to be logged in to do that!",
@@ -25,7 +24,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'post' => [
             "security" => "is_granted('ROLE_USER')",
             "security_message" => "You need to be logged in to do that!",
-            "openapi_context" => ['security' => [['bearerAuth' => []]]]
+            "openapi_context" => ['security' => [['bearerAuth' => []]]],
+            "denormalization_context" => ['groups' => ['activity_post']]
         ]
     ],
     itemOperations: [
@@ -37,7 +37,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'patch' => [
             "security" => "is_granted('ROLE_USER') and object.getOwner().getId() == user.getId()",
             "security_message" => "You don't own this!",
-            "openapi_context" => ['security' => [['bearerAuth' => []]]]
+            "openapi_context" => ['security' => [['bearerAuth' => []]]],
+            "denormalization_context" => ['groups' => ['activity_write']]
         ],
         'delete' => [
             "security" => "is_granted('ROLE_USER') and object.getOwner().getId() == user.getId()",
@@ -60,20 +61,20 @@ class Activity
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(["activity_read", "activity_write", "user_activities"])]
+    #[Groups(["activity_read", "activity_write", "user_activities", "activity_post"])]
     private $name;
 
     /**
      * @ORM\Column(type="integer")
      */
-    #[Groups(["activity_read", "activity_write", "user_activities"])]
+    #[Groups(["activity_read", "activity_write", "user_activities", "activity_post"])]
     private $duration;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="activities")
      * @ORM\JoinColumn(nullable=false)
      */
-    #[Groups("activity_read")]
+    #[Groups(["activity_read", "activity_post"])]
     private $owner;
 
 

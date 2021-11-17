@@ -15,7 +15,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     iri: "http://schema.org/Task",
     normalizationContext: ['groups' => ['task_read']],
-    denormalizationContext: ['groups' => ['task_write']],
     attributes: [
         "security" => "is_granted('ROLE_USER')",
         "security_message" => "You need to be logged in to do that!",
@@ -25,7 +24,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'post' => [
             "security" => "is_granted('ROLE_USER')",
             "security_message" => "You need to be logged in to do that!",
-            "openapi_context" => ['security' => [['bearerAuth' => []]]]
+            "openapi_context" => ['security' => [['bearerAuth' => []]]],
+            "denormalization_context" => ['groups' => ['task_post']],
         ]
     ],
     itemOperations: [
@@ -37,7 +37,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'patch' => [
             "security" => "is_granted('ROLE_USER') and object.getOwner().getId() == user.getId()",
             "security_message" => "You don't own this!",
-            "openapi_context" => ['security' => [['bearerAuth' => []]]]
+            "openapi_context" => ['security' => [['bearerAuth' => []]]],
+            "denormalization_context" => ['groups' => ['task_write']],
         ],
         'delete' => [
             "security" => "is_granted('ROLE_USER') and object.getOwner().getId() == user.getId()",
@@ -63,38 +64,38 @@ class Task
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(["task_read", "task_write", "user_tasks"])]
+    #[Groups(["task_read", "task_write", "user_tasks", "task_post"])]
     private $name;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    #[Groups(["task_read", "task_write", "user_tasks"])]
+    #[Groups(["task_read", "task_write", "user_tasks", "task_post"])]
     private $isActivated;
 
     /**
      * @ORM\Column(type="integer")
      */
-    #[Groups(["task_read", "task_write", "user_tasks"])]
+    #[Groups(["task_read", "task_write", "user_tasks", "task_post"])]
     private $repeatInterval;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    #[Groups(["task_read", "task_write", "user_tasks"])]
+    #[Groups(["task_read", "task_write", "user_tasks", "task_post"])]
     private $start;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    #[Groups(["task_read", "task_write", "user_tasks"])]
+    #[Groups(["task_read", "task_write", "user_tasks", "task_post"])]
     private $message;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tasks")
      * @ORM\JoinColumn(nullable=false)
      */
-    #[Groups("task_read")]
+    #[Groups(["task_read", "task_post"])]
     private $owner;
 
     public function getId(): ?int
